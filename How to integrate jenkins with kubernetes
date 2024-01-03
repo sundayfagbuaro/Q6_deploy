@@ -1,0 +1,84 @@
+Steps
+Ensure you have a kubernetes cluster in place
+Ensure you have a jenkins server setup
+
+1. Create a service account on the kubernetes cluster
+- $ kubectl create serviceaccount jenkins
+
+2. Create a binding role (run the below command on the kubernetes master)
+
+cat <<EOF | kubectl create -f -
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jenkins-integration
+  labels:
+    k8s-app: jenkins-image-builder
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: jenkins
+  namespace: default
+EOF
+
+3. Extract service account token (run the below command on the k8 master)
+  kubectl get secrets $(kubectl get serviceaccounts jenkins -o jsonpath='{.secrets[].name}' -o jsonpath='{.data.token}') | base64 -d
+
+  
+
+
+  In case the token is not shown run the below command, run the below commands to solve the problem
+
+cat <<EOF | kubectl create -f -
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: jenkins
+  annotations: 
+    kubernetes.io/service-account.name: jenkins
+EOF
+
+
+Then run the command to extract the secret again
+  kubectl get secrets jenkins -o jsonpath='{.data.token}' | base64 -d
+
+4. Copy the token to a notepad
+
+5. Add the token as credentials on jenkins
+
+6. Add new cloud (on Jenkins)
+    - Specify the kubernetes cluster url. This can be found in .kube/config file
+    - Generate kubernetes certificate key. Use the content of the certificate authority in the config file
+      echo -n <content of certificte authority from the cluster config file> | base64 --decode
+
+7. Copy the generated crtificate key and paste in the required field on jenkins
+
+8. Use pipeline syntax to generate kuberntescli configuration
+    - Select withkubernetescredential: configure kubernetes cli (kubectl) with multiple credentials
+
+
+
+
+
+
+
+BLOCK TO REPLACE BUILD_NUMBER IN THE DEPLOYMENT FILE
+Create additional stage in the first jenkins file
+stage('Trigger CD Pipeline'){
+  steps{
+    script{
+      sh "curl -v -k -user bobsunne:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'https://<jenkins_ip_or_dnsname>/job/<2nd_pipeline_job>/buildWithParameters?token=<anyname_for the token>'"
+    }
+  }
+}
+
+go to jenkins
+create the 2nd pipeline job and configure it with the parameters we have used above 
+Check this project is parameterized. specify the parameter <IMAGE_TAG>. There is no need for default value
+Check the box trigger build remotely and use the specified token in the above curl command - <anyname_for the token>
+Create another Jenkins file in the second repository <2nd_Jenkins_for_deployment>
+
