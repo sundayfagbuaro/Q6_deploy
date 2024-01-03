@@ -40,9 +40,12 @@ pipeline {
                     git config --global user.email "fabuu4real@gmail.com"
                     git add deployment.yaml
                     git commit -m "updated deployment manifest"
-                """              
-                git branch: 'main', credentialsId: 'git', url: 'https://github.com/sundayfagbuaro/Q6_deploy.git'
+                """
+                withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]){
                     sh "git push https://github.com/sundayfagbuaro/Q6_deploy.git main"
+                }           
+            //    git branch: 'main', credentialsId: 'git', url: 'https://github.com/sundayfagbuaro/Q6_deploy.git'
+            //        sh "git push https://github.com/sundayfagbuaro/Q6_deploy.git main"
             }
         }
 
