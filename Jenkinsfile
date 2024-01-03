@@ -43,14 +43,14 @@ pipeline {
                     git commit -m "updated deployment manifest"
                     git push https://${GIT_PAT}@github.com/sundayfagbuaro/Q6_deploy.git main
                 """
-//                withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]){
-//                    sh "git push https://github.com/sundayfagbuaro/Q6_deploy.git main"
-//                }  
-//                 withCredentials([(credentialsId: 'git-hub')]){
-//                    sh "git push https://${GIT_PAT}@github.com/sundayfagbuaro/Q6_deploy.git main"
+           //      withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]){
+           //         sh "git push https://github.com/sundayfagbuaro/Q6_deploy.git main"
+           //      }  
+           //       withCredentials([(credentialsId: 'git-hub')]){
+           //          sh "git push https://${GIT_PAT}@github.com/sundayfagbuaro/Q6_deploy.git main"
                 }                   
             }
-        }
+        
 
         stage('Deploy to K8s') {
             steps {
@@ -59,6 +59,4 @@ pipeline {
                 }
             }
         }
-        
-    }
-}
+}   } 
