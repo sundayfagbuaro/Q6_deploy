@@ -38,7 +38,7 @@ pipeline {
                     git add deployment.yaml
                     git commit -m "updated deployment manifest"
                 """              
-                    credentialsId: 'git', url: 'https://github.com/sundayfagbuaro/Q6_deploy.git'
+                    git branch: 'main', credentialsId: 'git', url: 'https://github.com/sundayfagbuaro/Q6_deploy.git'
                     sh "git push https://github.com/sundayfagbuaro/Q6_deploy.git main"
                 }
             }
