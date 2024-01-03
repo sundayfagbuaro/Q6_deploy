@@ -4,6 +4,7 @@ pipeline {
     }
     environment {
         APP_NAME = "k8-deployment-test"
+        GIT_PAT = 'git-hub'
     }
     
     stages {
@@ -40,12 +41,13 @@ pipeline {
                     git config --global user.email "fabuu4real@gmail.com"
                     git add deployment.yaml
                     git commit -m "updated deployment manifest"
+                    git push https://${GIT_PAT}@github.com/sundayfagbuaro/Q6_deploy.git main
                 """
 //                withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]){
 //                    sh "git push https://github.com/sundayfagbuaro/Q6_deploy.git main"
 //                }  
-                 withCredentials([(credentialsId: 'git-hub')]){
-                    sh "git push https://github.com/sundayfagbuaro/Q6_deploy.git main"
+//                 withCredentials([(credentialsId: 'git-hub')]){
+//                    sh "git push https://${GIT_PAT}@github.com/sundayfagbuaro/Q6_deploy.git main"
                 }                   
             }
         }
