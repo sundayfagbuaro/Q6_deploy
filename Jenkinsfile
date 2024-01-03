@@ -41,11 +41,12 @@ pipeline {
                     git add deployment.yaml
                     git commit -m "updated deployment manifest"
                 """
-                withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]){
+//                withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]){
+//                    sh "git push https://github.com/sundayfagbuaro/Q6_deploy.git main"
+//                }  
+                 withCredentials([(credentialsId: 'git-hub')]){
                     sh "git push https://github.com/sundayfagbuaro/Q6_deploy.git main"
-                }           
-            //    git branch: 'main', credentialsId: 'git', url: 'https://github.com/sundayfagbuaro/Q6_deploy.git'
-            //        sh "git push https://github.com/sundayfagbuaro/Q6_deploy.git main"
+                }                   
             }
         }
 
