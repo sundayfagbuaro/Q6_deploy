@@ -40,6 +40,7 @@ pipeline {
                     git config --global user.name "sundayfagbuaro"
                     git config --global user.email "fabuu4real@gmail.com"
                     git config --global credential "$GIT_PAT"
+                    git config --global credential.helper cache
                     git add deployment.yaml
                     git commit -m "updated deployment manifest"
                     git push https://github.com/sundayfagbuaro/Q6_deploy.git main
