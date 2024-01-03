@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     git branch: 'main',
-                        credentialsId: 'git-hub', 
+                        credentialsId: 'git', 
                         url: 'https://github.com/sundayfagbuaro/Q6_deploy.git'
                 // cloning repo
                 // git credentialsId: 'git', url: 'https://github.com/sundayfagbuaro/Q3_Jenkins_Pipeline.git'
@@ -38,7 +38,7 @@ pipeline {
                     git add deployment.yaml
                     git commit -m "updated deployment manifest"
                 """              
-                    credentialsId: 'git-hub', url: 'https://github.com/sundayfagbuaro/Q6_deploy.git'
+                    credentialsId: 'git', url: 'https://github.com/sundayfagbuaro/Q6_deploy.git'
                     sh "git push https://github.com/sundayfagbuaro/Q6_deploy.git main"
                 }
             }
