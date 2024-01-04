@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: sundayfagbuaro/k8-deployment-test:1.0.0-50
+        image: sundayfagbuaro/k8-deployment-test:1.0.0-51
         ports:
         - containerPort: 80
 ---
