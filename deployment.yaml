@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: ${DOCKER_USER}/${APP_NAME}:${IMAGE_TAG}
+        image: sundayfagbuaro/k8-deployment-test:${IMAGE_TAG}
         ports:
         - containerPort: 80
 ---
