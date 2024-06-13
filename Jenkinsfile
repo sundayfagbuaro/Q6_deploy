@@ -42,13 +42,9 @@ pipeline {
                     git add deployment.yaml
                     git commit -m "updated deployment manifest"
                 """
-//                 withCredentials([gitUsernamePassword(credentialsId: 'git-hub', gitToolName: 'Default')]){
-//                    sh "git push https://github.com/sundayfagbuaro/Q6_deploy.git main"
-//                 } 
-
-                 withCredentials([usernamePassword(credentialsId: 'git-hub', passwordVariable: 'git_token', usernameVariable: 'git_user')]) {
+                 withCredentials([gitUsernamePassword(credentialsId: 'git-hub', gitToolName: 'Default')]){
                     sh "git push https://github.com/sundayfagbuaro/Q6_deploy.git main"
-                }  
+                 } 
                 }                   
             }
         
