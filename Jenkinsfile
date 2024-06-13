@@ -17,7 +17,7 @@ pipeline {
         stage('SCM Checkout') {
             steps {
                 script {
-                    git branch: 'main', credentialsId: 'git', url: 'https://github.com/sundayfagbuaro/Q6_deploy.git'
+                    git branch: 'main', credentialsId: 'git-hub', url: 'https://github.com/sundayfagbuaro/Q6_deploy.git'
                 // cloning repo
                 // git credentialsId: 'git', url: 'https://github.com/sundayfagbuaro/Q3_Jenkins_Pipeline.git'
                 }
